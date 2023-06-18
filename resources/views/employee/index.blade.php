@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
     @vite('resources/sass/app.scss')
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-md navbar-dark bg-info">
         <div class="container">
             <a href="{{ route('home') }}" class="navbar-brand mb-0 h1"><i class="bi-hexagon-fill me-2"></i> Data Master</a>
 
