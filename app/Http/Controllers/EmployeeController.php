@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Validator;
+use App\Models\Employee;
+use App\Models\Position;
 
 class EmployeeController extends Controller
 {
@@ -11,11 +13,17 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $pageTitle = 'Employee List';
+{
+    $pageTitle = 'Employee List';
 
-        return view('employee.index', compact('pageTitle'));
-    }
+    // ELOQUENT
+    $employees = Employee::all();
+
+    return view('employee.index', [
+        'pageTitle' => $pageTitle,
+        'employees' => $employees
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +32,10 @@ class EmployeeController extends Controller
     {
         $pageTitle = 'Create Employee';
 
-        return view('employee.create', compact('pageTitle'));
+        // ELOQUENT
+        $positions = Position::all();
+
+        return view('employee.create', compact('pageTitle', 'positions'));
     }
 
     /**
@@ -49,7 +60,16 @@ class EmployeeController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        return $request->all();
+        // ELOQUENT
+        $employee = New Employee;
+        $employee->firstname = $request->firstName;
+        $employee->lastname = $request->lastName;
+        $employee->email = $request->email;
+        $employee->age = $request->age;
+        $employee->position_id = $request->position;
+        $employee->save();
+
+        return redirect()->route('employees.index');
     }
 
     /**
